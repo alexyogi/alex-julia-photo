@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alex & Julia Photography — Maryland</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink:     #1a1714;
+      --mist:    #f7f5f1;
+      --warm:    #ede8e0;
+      --gold:    #b5935a;
+      --gold-lt: #d4b483;
+      --white:   #ffffff;
+      --gray:    #7a756e;
+      --display: 'Cormorant Garamond', Georgia, serif;
+      --body:    'Inter', system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--body); background: var(--mist); color: var(--ink); font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 3rem;
+      transition: background 0.35s ease, backdrop-filter 0.35s ease;
+    }
+    nav.scrolled {
+      background: rgba(247,245,241,0.93);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--warm);
+    }
+    .nav-logo { font-family: var(--display); font-size: 1.25rem; font-weight: 400; letter-spacing: 0.05em; color: var(--white); transition: color 0.35s ease; }
+    nav.scrolled .nav-logo { color: var(--ink); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-size: 0.75rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.82); transition: color 0.3s; }
+    nav.scrolled .nav-links a { color: var(--gray); }
+    .nav-links a:hover, nav.scrolled .nav-links a:hover { color: var(--gold); }
+    .nav-cta { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.6rem 1.4rem; border: 1px solid rgba(255,255,255,0.6); color: var(--white); transition: background 0.3s, color 0.3s, border-color 0.3s; }
+    nav.scrolled .nav-cta { border-color: var(--gold); color: var(--gold); }
+    .nav-cta:hover { background: var(--gold) !important; border-color: var(--gold) !important; color: var(--ink) !important; }
+    .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .burger span { display: block; width: 24px; height: 1.5px; background: var(--white); transition: background 0.3s, transform 0.3s, opacity 0.3s; }
+    nav.scrolled .burger span { background: var(--ink); }
+    .burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .mobile-menu { display: none; position: fixed; inset: 0; background: var(--ink); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-family: var(--display); font-size: 2.2rem; font-weight: 300; color: var(--white); letter-spacing: 0.05em; transition: color 0.3s; }
+    .mobile-menu a:hover { color: var(--gold-lt); }
+
+    /* ── HERO ── */
+    .hero { position: relative; height: 100svh; min-height: 600px; display: flex; align-items: flex-end; overflow: hidden; }
+    .hero > img { position: absolute; inset: 0; z-index: 0; object-position: center 25%; filter: brightness(0.5); }
+    .hero::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(10,8,6,0.82) 0%, rgba(10,8,6,0.25) 50%, rgba(10,8,6,0.1) 100%); }
+    .hero-content { position: relative; z-index: 2; padding: 0 clamp(1.5rem, 5vw, 5rem) clamp(3rem, 8vh, 6rem); max-width: 800px; }
+    .hero-eyebrow { font-size: 0.7rem; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-lt); margin-bottom: 1.2rem; }
+    .hero h1 { font-family: var(--display); font-size: clamp(2.8rem, 6.5vw, 6rem); font-weight: 300; line-height: 1.04; color: var(--white); letter-spacing: -0.01em; margin-bottom: 1.3rem; }
+    .hero h1 em { font-style: italic; color: var(--gold-lt); }
+    .hero-sub { font-size: 0.9rem; color: rgba(255,255,255,0.62); max-width: 380px; line-height: 1.8; margin-bottom: 2.4rem; }
+    .btn { display: inline-block; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; padding: 1rem 2.2rem; border: 1px solid var(--gold); color: var(--white); transition: background 0.3s, color 0.3s; }
+    .btn:hover { background: var(--gold); color: var(--ink); }
+    .btn-solid { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+    .btn-solid:hover { background: var(--gold-lt); border-color: var(--gold-lt); color: var(--ink); }
+    .scroll-line { position: absolute; bottom: 2.5rem; right: clamp(1.5rem, 5vw, 5rem); z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+    .scroll-line::after { content: ''; width: 1px; height: 52px; background: linear-gradient(to bottom, var(--gold-lt), transparent); }
+
+    /* ── TAGLINE ── */
+    .tagline-strip { background: var(--ink); padding: 2.8rem clamp(1.5rem, 5vw, 5rem); display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+    .tagline-strip blockquote { font-family: var(--display); font-size: clamp(1.4rem, 2.5vw, 2.2rem); font-weight: 300; font-style: italic; color: var(--white); line-height: 1.3; }
+    .tagline-strip blockquote em { font-style: normal; color: var(--gold-lt); }
+    .tagline-strip span { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); white-space: nowrap; }
+
+    /* ── SECTION LABEL ── */
+    .label { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+
+    /* ── ABOUT ── */
+    .about { display: grid; grid-template-columns: 1fr 1fr; min-height: 600px; }
+    .about-img { position: relative; overflow: hidden; }
+    .about-img img { position: absolute; inset: 0; object-position: center top; }
+    .about-text { padding: clamp(3rem, 6vw, 6rem) clamp(2rem, 5vw, 5rem); display: flex; flex-direction: column; justify-content: center; background: var(--warm); }
+    .about-text h2 { font-family: var(--display); font-size: clamp(2rem, 3vw, 3rem); font-weight: 300; line-height: 1.1; margin-bottom: 1.6rem; }
+    .about-text h2 em { font-style: italic; color: var(--gold); }
+    .about-text p { font-size: 0.9rem; color: var(--gray); line-height: 1.9; margin-bottom: 1.1rem; max-width: 420px; }
+    .about-text p:last-of-type { margin-bottom: 2rem; }
+    .about-sig { font-family: var(--display); font-size: 1.4rem; font-weight: 400; font-style: italic; color: var(--gold); margin-top: 0.5rem; }
+
+    /* ── SERVICES ── */
+    .services-section { padding: clamp(4rem, 8vw, 8rem) clamp(1.5rem, 5vw, 5rem); }
+    .services-head { text-align: center; margin-bottom: 3.5rem; }
+    .services-head h2 { font-family: var(--display); font-size: clamp(2rem, 3.5vw, 3.2rem); font-weight: 300; color: var(--ink); margin-bottom: 0.8rem; }
+    .services-head h2 em { font-style: italic; color: var(--gold); }
+    .services-head p { font-size: 0.88rem; color: var(--gray); max-width: 480px; margin: 0 auto; line-height: 1.75; }
+    .services-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: #ddd8ce; }
+    .svc-card { background: var(--mist); display: flex; flex-direction: column; transition: background 0.3s; }
+    .svc-card:hover { background: var(--white); }
+    .svc-img { height: 260px; overflow: hidden; flex-shrink: 0; }
+    .svc-img img { transition: transform 0.5s ease; height: 100%; object-fit: cover; }
+    .svc-card:hover .svc-img img { transform: scale(1.04); }
+    .svc-body { padding: 1.8rem 1.4rem 2.2rem; flex: 1; }
+    .svc-title { font-family: var(--display); font-size: 1.1rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink); margin-bottom: 0.3rem; }
+    .svc-divider { width: 28px; height: 1px; background: var(--gold); margin: 0.7rem 0 0.9rem; }
+    .svc-desc { font-size: 0.8rem; color: var(--gray); line-height: 1.7; margin-bottom: 1rem; }
+    .svc-list { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; }
+    .svc-list li { font-size: 0.75rem; color: var(--gray); padding-left: 1rem; position: relative; }
+    .svc-list li::before { content: '—'; position: absolute; left: 0; color: var(--gold-lt); }
+
+    /* ── PORTFOLIO ── */
+    .portfolio-section { background: var(--ink); padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 5rem); }
+    .portfolio-head { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2.5rem; gap: 1.5rem; flex-wrap: wrap; }
+    .portfolio-head h2 { font-family: var(--display); font-size: clamp(2rem, 3.5vw, 3.2rem); font-weight: 300; color: var(--white); }
+    .portfolio-head h2 em { font-style: italic; color: var(--gold-lt); }
+    .mosaic { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: 72px; gap: 3px; }
+    .m-cell { overflow: hidden; cursor: pointer; }
+    .m-cell img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease, filter 0.3s; filter: brightness(0.88); }
+    .m-cell:hover img { transform: scale(1.05); filter: brightness(1); }
+    .m-cell:nth-child(1) { grid-column: 1/5;  grid-row: span 5; }
+    .m-cell:nth-child(2) { grid-column: 5/8;  grid-row: span 3; }
+    .m-cell:nth-child(3) { grid-column: 8/13; grid-row: span 4; }
+    .m-cell:nth-child(4) { grid-column: 5/9;  grid-row: span 4; }
+    .m-cell:nth-child(5) { grid-column: 9/13; grid-row: span 3; }
+    .m-cell:nth-child(6) { grid-column: 1/4;  grid-row: span 3; }
+    .m-cell:nth-child(7) { grid-column: 4/8;  grid-row: span 3; }
+    .m-cell:nth-child(8) { grid-column: 8/13; grid-row: span 4; }
+    .portfolio-cta { text-align: center; padding-top: 3rem; }
+
+    /* ── CONTACT ── */
+    .contact-section { display: grid; grid-template-columns: 1fr 1fr; padding: clamp(4rem, 8vw, 8rem) clamp(1.5rem, 5vw, 5rem); gap: 5rem; align-items: start; }
+    .contact-left h2 { font-family: var(--display); font-size: clamp(2rem, 3.5vw, 3.5rem); font-weight: 300; line-height: 1.1; margin-bottom: 1.4rem; }
+    .contact-left h2 em { font-style: italic; color: var(--gold); }
+    .contact-left p { font-size: 0.88rem; color: var(--gray); line-height: 1.85; margin-bottom: 2.5rem; max-width: 360px; }
+    .contact-details { display: flex; flex-direction: column; gap: 0.9rem; }
+    .contact-details a { font-size: 0.82rem; color: var(--gray); display: flex; align-items: center; gap: 0.7rem; transition: color 0.3s; }
+    .contact-details a::before { content: '→'; color: var(--gold); }
+    .contact-details a:hover { color: var(--gold); }
+    .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .fg { display: flex; flex-direction: column; gap: 0.4rem; }
+    .fg label { font-size: 0.67rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray); }
+    .fg input, .fg select, .fg textarea { background: var(--warm); border: 1px solid transparent; border-bottom-color: #cac4ba; padding: 0.85rem 0.75rem; font-family: var(--body); font-size: 0.87rem; color: var(--ink); outline: none; width: 100%; resize: none; border-radius: 2px; transition: border-color 0.3s; }
+    .fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--gold); }
+    .fg textarea { min-height: 110px; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--ink); padding: 2.8rem clamp(1.5rem, 5vw, 5rem); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; border-top: 1px solid #28231e; }
+    .footer-logo { font-family: var(--display); font-size: 1.05rem; font-weight: 300; color: var(--white); letter-spacing: 0.06em; }
+    .footer-logo em { font-style: normal; color: var(--gold-lt); }
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+    .footer-links a { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.32); transition: color 0.3s; }
+    .footer-links a:hover { color: var(--gold-lt); }
+    .footer-copy { font-size: 0.7rem; color: rgba(255,255,255,0.22); }
+
+    /* ── FADE IN ── */
+    .fi { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fi.vis { opacity: 1; transform: none; }
+    .fi.d1 { transition-delay: 0.1s; } .fi.d2 { transition-delay: 0.2s; } .fi.d3 { transition-delay: 0.3s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .services-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 860px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links, .nav-cta { display: none; }
+      .burger { display: flex; }
+      .about { grid-template-columns: 1fr; }
+      .about-img { min-height: 340px; }
+      .mosaic { grid-template-columns: 1fr 1fr; grid-auto-rows: 140px; }
+      .m-cell { grid-column: auto !important; grid-row: span 2 !important; }
+      .m-cell:nth-child(odd) { grid-row: span 3 !important; }
+      .contact-section { grid-template-columns: 1fr; gap: 3rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .tagline-strip { flex-direction: column; align-items: flex-start; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 2.5rem; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .mosaic { grid-template-columns: 1fr; grid-auto-rows: 220px; }
+      .m-cell { grid-row: span 1 !important; }
+      .scroll-line { display: none; }
+    }
+    @media (max-width: 400px) {
+      .services-grid { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .fi { opacity: 1; transform: none; }
+      * { transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mm">
+  <a href="#about" onclick="closeMM()">Meet Us</a>
+  <a href="#services" onclick="closeMM()">Services</a>
+  <a href="#portfolio" onclick="closeMM()">Our Work</a>
+  <a href="#contact" onclick="closeMM()">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Alex & Julia Photography</a>
+  <ul class="nav-links">
+    <li><a href="#about">Meet Us</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#portfolio">Our Work</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Contact</a>
+  <div class="burger" id="burger" onclick="toggleMM()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO: couples walking under tree canopy -->
+<section class="hero" id="home">
+  <img src="images/IMG_0133.JPG" alt="Julia and Alex walking together through a tree-lined campus path" />
+  <div class="hero-content">
+    <p class="hero-eyebrow">Maryland-Based Photographers</p>
+    <h1>Turning little moments into <em>forever memories</em></h1>
+    <p class="hero-sub">We capture life's most meaningful moments — genuine, warm, and timeless — wherever your story takes us.</p>
+    <a href="#contact" class="btn">Book a session</a>
+  </div>
+  <div class="scroll-line" aria-hidden="true">Scroll</div>
+</section>
+
+<!-- TAGLINE STRIP -->
+<div class="tagline-strip">
+  <blockquote>Capturing real moments and genuine connections <em>you'll treasure forever.</em></blockquote>
+  <span>Maryland & Beyond</span>
+</div>
+
+<!-- ABOUT: couples sitting on brick wall with campus behind them -->
+<section class="about" id="about">
+  <div class="about-img">
+    <img src="images/IMG_8107.JPG" alt="Two graduates sitting on a brick wall with the McKeldin Mall stretching behind them" />
+  </div>
+  <div class="about-text">
+    <p class="label">Meet us</p>
+    <h2 class="fi">Hi, we're <em>Julia & Alex</em></h2>
+    <p class="fi d1">We're a Maryland-based photography duo passionate about capturing life's most meaningful moments. From senior portraits and couples sessions to group photos and beautiful landscapes, we love creating photos that feel genuine, warm, and timeless.</p>
+    <p class="fi d2">When we're not behind the camera, you can usually find us traveling, hiking, spending time with animals, or enjoying quality time together. Photography allows us to connect with people, tell stories, and preserve memories that last forever — and we're so excited to share that passion with you!</p>
+    <p class="about-sig fi d3">— Julia & Alex</p>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <div class="services-head fi">
+    <p class="label">What we offer</p>
+    <h2>Photography <em>services</em></h2>
+    <p>Capturing real moments and genuine connections that you'll treasure forever.</p>
+  </div>
+  <div class="services-grid">
+
+    <!-- Senior Photos: Julia holding cap by columns -->
+    <div class="svc-card fi">
+      <div class="svc-img">
+        <img src="images/IMG_0309.JPG" alt="Senior portrait — graduate holding cap up joyfully by white columns" style="object-position: center top;" />
+      </div>
+      <div class="svc-body">
+        <div class="svc-title">Senior Photos</div>
+        <div class="svc-divider"></div>
+        <p class="svc-desc">Celebrate this exciting chapter with photos that feel authentic, confident, and completely you.</p>
+        <ul class="svc-list">
+          <li>Senior Portrait Sessions</li>
+          <li>Cap & Gown Photos</li>
+          <li>College Commitment Photos</li>
+          <li>Creative/Styled Senior Shoots</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Senior Group Photos: large group at fountain -->
+    <div class="svc-card fi d1">
+      <div class="svc-img">
+        <img src="images/IMG_0031.JPG" alt="Senior group photo — graduates posed together at a campus fountain" style="object-position: center top;" />
+      </div>
+      <div class="svc-body">
+        <div class="svc-title">Senior Group Photos</div>
+        <div class="svc-divider"></div>
+        <p class="svc-desc">Capture the memories with your favorite people before graduation day.</p>
+        <ul class="svc-list">
+          <li>Best Friend Sessions</li>
+          <li>Cheer/Dance/Sports Groups</li>
+          <li>Graduation Group Photos</li>
+          <li>Matching or Themed Shoots</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Portraits & Solo: person leaning against tree with cap -->
+    <div class="svc-card fi d2">
+      <div class="svc-img">
+        <img src="images/IMG_8960.JPG" alt="Solo portrait — graduate leaning against a tree holding their cap" style="object-position: center 20%;" />
+      </div>
+      <div class="svc-body">
+        <div class="svc-title">Portraits & Solo Shots</div>
+        <div class="svc-divider"></div>
+        <p class="svc-desc">Perfect for updating your photos, building confidence, or simply capturing your personality.</p>
+        <ul class="svc-list">
+          <li>Solo Portrait Sessions</li>
+          <li>Lifestyle Photos</li>
+          <li>Creative Portrait Shoots</li>
+          <li>Seasonal Mini Sessions</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Headshots: portrait in nature sitting in grass -->
+    <div class="svc-card fi d2">
+      <div class="svc-img">
+        <img src="images/julia-headshot.jpeg" alt="Natural headshot — portrait in a lush green garden setting" style="object-position: center 15%;" />
+      </div>
+      <div class="svc-body">
+        <div class="svc-title">Headshots</div>
+        <div class="svc-divider"></div>
+        <p class="svc-desc">Professional yet natural photos for school, work, social media, or personal branding.</p>
+        <ul class="svc-list">
+          <li>Professional Headshots</li>
+          <li>Student Headshots</li>
+          <li>Branding & Social Media</li>
+          <li>Casual & Studio-Style Looks</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Couples: two graduates sitting on brick wall -->
+    <div class="svc-card fi d3">
+      <div class="svc-img">
+        <img src="images/couple.JPG" alt="Couples session — two graduates posing together with campus in background" style="object-position: center 20%;" />
+      </div>
+      <div class="svc-body">
+        <div class="svc-title">Couples</div>
+        <div class="svc-divider"></div>
+        <p class="svc-desc">Romantic, candid, and fun moments captured naturally.</p>
+        <ul class="svc-list">
+          <li>Couples Sessions</li>
+          <li>Anniversary Photos</li>
+          <li>Engagement Sessions</li>
+          <li>Golden Hour Shoots</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PORTFOLIO MOSAIC -->
+<section class="portfolio-section" id="portfolio">
+  <div class="portfolio-head fi">
+    <div>
+      <p class="label" style="color: var(--gold-lt);">Our work</p>
+      <h2>A glimpse into <em>our world</em></h2>
+    </div>
+    <a href="#contact" class="btn">Book a session</a>
+  </div>
+
+  <div class="mosaic">
+    <!-- group walking toward McKeldin Library -->
+    <div class="m-cell"><img src="images/IMG_0093.JPG" alt="Group of graduates walking toward McKeldin Library on a sunny day" style="object-position: center 30%;"></div>
+    <!-- senior laying on grass -->
+    <div class="m-cell"><img src="images/hs-senior.JPG" alt="Solo senior portrait leaning against a white column overlooking campus" style="object-position: center top;"></div>
+    <!-- couples portrait with mall behind -->
+    <div class="m-cell"><img src="images/IMG_0230.JPG" alt="Two graduates sitting on brick wall with McKeldin Mall behind them" style="object-position: center 20%;"></div>
+    <!-- portrait in grass -->
+    <div class="m-cell"><img src="images/IMG_0498_cropped.JPG" alt="Candid lifestyle portrait in a garden setting" style="object-position: center 10%;"></div>
+    <!-- jo and riya -->
+    <div class="m-cell"><img src="images/IMG_0182.JPG" alt="Close-up detail of white heels and a graduation tassel" style="object-position: center;"></div>
+    <!-- golden hour group: four friends -->
+    <div class="m-cell"><img src="images/IMG_6181.JPG" alt="Group of four graduates laughing together in golden hour light" style="object-position: center top;"></div>
+    <!-- large group on dorm steps -->
+    <div class="m-cell"><img src="images/IMG_0657_cropped.JPG" alt="Large group of graduates posing on brick building steps" style="object-position: center top;"></div>
+    <!-- graduation by the water -->
+    <div class="m-cell"><img src="images/IMG_0220.JPG" alt="Graduate in cap and gown holding diploma by the water" style="object-position: center 20%;"></div>
+  </div>
+
+  <div class="portfolio-cta fi">
+    <a href="#contact" class="btn btn-solid" style="margin-top:1rem;">Start your session</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-left fi">
+    <p class="label">Get in touch</p>
+    <h2>Let's create something <em>beautiful</em> together</h2>
+    <p>We'd love to hear about what you have in mind! Fill out the form and we'll get back to you as soon as possible.</p>
+    <div class="contact-details">
+      <a href="https://www.instagram.com/aj_cophotography/" target="_blank" rel="noopener">@aj_cophotography on Instagram</a>
+      <a href="mailto:juliaopalrosa8@gmail.com">juliaopalrosa8@gmail.com</a>
+      <a href="mailto:alexyogi@terpmail.umd.edu">alexyogi@terpmail.umd.edu</a>
+      <a href="#">Based in Maryland — available to travel</a>
+    </div>
+  </div>
+  <div class="contact-form fi d1">
+    <div class="form-row">
+      <div class="fg"><label for="fn">First name</label><input type="text" id="fn" placeholder="Julia" /></div>
+      <div class="fg"><label for="ln">Last name</label><input type="text" id="ln" placeholder="Smith" /></div>
+    </div>
+    <div class="fg"><label for="em">Email</label><input type="email" id="em" placeholder="you@example.com" /></div>
+    <div class="fg">
+      <label for="svc">Session type</label>
+      <select id="svc">
+        <option value="">Select a service…</option>
+        <option>Senior Photos</option>
+        <option>Senior Group Photos</option>
+        <option>Portraits & Solo Shots</option>
+        <option>Headshots</option>
+        <option>Couples Session</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="fg"><label for="dt">Preferred date (if known)</label><input type="date" id="dt" /></div>
+    <div class="fg"><label for="msg">Tell us about your vision</label><textarea id="msg" placeholder="Location ideas, style preferences, any special details…"></textarea></div>
+    <button class="btn btn-solid" style="cursor:pointer; align-self:flex-start; border:none;" onclick="submitForm(this)">Send message</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Alex <em>&</em> Julia Photography</div>
+  <ul class="footer-links">
+    <li><a href="#about">Meet Us</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#portfolio">Our Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 Alex & Julia Photography. All rights reserved.</p>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60), { passive: true });
+  const mm = document.getElementById('mm');
+  const burger = document.getElementById('burger');
+  function toggleMM() {
+    const open = mm.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+    burger.querySelectorAll('span').forEach(s => s.style.background = open ? '#fff' : '');
+  }
+  function closeMM() { mm.classList.remove('open'); burger.classList.remove('open'); document.body.style.overflow = ''; }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fi').forEach(el => io.observe(el));
+  function submitForm(btn) { btn.textContent = 'Message sent ✓'; btn.style.background = '#4a7c59'; btn.disabled = true; }
+</script>
+</body>
+</html>
